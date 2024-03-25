@@ -2,7 +2,7 @@
 
 public interface IHazardNotifier
 {
-    public void Notify()
+    void Notify()
     {
         Console.WriteLine("Hazardous situation has occured!");
     }

@@ -1,8 +1,3 @@
 ﻿namespace Containers;
 
-public class OverflowException : Exception
-{
-    public OverflowException(string message) : base(message)
-    {
-    }
-}
+public class OverflowException(string message) : Exception(message);

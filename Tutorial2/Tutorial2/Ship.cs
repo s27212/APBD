@@ -2,18 +2,26 @@
 
 public class Ship
 {
+    public Ship(List<Container> containers, int maxSpeedKnots, int maxContainers, double maxWeight)
+    {
+        this.containers = containers;
+        MaxSpeedKnots = maxSpeedKnots;
+        MaxContainers = maxContainers;
+        MaxWeight = maxWeight;
+    }
+
     public List<Container> containers { get; set; }
-    public int maxSpeedKnots { get; set; }
-    public int maxContainers { get; set; }
-    public double maxWeight { get; set; }
+    public int MaxSpeedKnots { get; set; }
+    public int MaxContainers { get; set; }
+    public double MaxWeight { get; set; }
 
     public void Load(Container container)
     {
-        if (containers.Count + 1 > maxContainers)
+        if (containers.Count + 1 > MaxContainers)
         {
             Console.WriteLine("The ship cannot take any more containers");
         }
-        else if (GetTotalMass() + container.GetTotalMass() > maxWeight)
+        else if (GetTotalMass() + container.GetTotalMass() > MaxWeight)
         {
             Console.WriteLine("The maximum cargo weight is exceeded");
         }
@@ -21,6 +29,38 @@ public class Ship
         {
             containers.Add(container);
         }
+    }
+
+    public void Load(List<Container> containerList)
+    {
+        foreach (var container in containerList)
+        {
+            Load(container);
+        }
+    }
+
+    public void Transfer(Container container, Ship other)
+    {
+        other.Load(container);
+        Unload(container);
+    }
+
+    public void Replace(string toReplace, Container replaceWith)
+    {
+        var container = containers.Find(c => c.SerialNumber == toReplace);
+        if (container == null)
+        {
+            Console.WriteLine("Container with such serial number does not exist");
+        }
+        else
+        {
+            containers[containers.IndexOf(container)] = replaceWith;
+        }
+    }
+
+    private void Unload(Container container)
+    {
+        containers.Remove(container);
     }
 
     public void UnloadLast()
@@ -31,7 +71,7 @@ public class Ship
     public void Info()
     {
         Console.WriteLine("Maximum speed: {0}\nMaximum containers number: {1}\nMaximum weight: {2}",
-            maxSpeedKnots,maxContainers,maxWeight);
+            MaxSpeedKnots,MaxContainers,MaxWeight);
         Console.WriteLine("Loaded containers:");
         foreach (var c in containers)
         {
@@ -43,12 +83,6 @@ public class Ship
 
     private double GetTotalMass()
     {
-        double mass = 0;
-        foreach (var c in containers)
-        {
-            mass += c.GetTotalMass();
-        }
-
-        return mass;
+        return containers.Sum(c => c.GetTotalMass());
     }
 }

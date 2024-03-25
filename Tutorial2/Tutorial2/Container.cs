@@ -2,44 +2,44 @@
 
 public abstract class Container
 {
-    public double cargoMass { get; set; }
-    public int height { get; set; }
-    public double tareWeight { get; set; }
-    public int depth { get; set; }
-    public string serialNumber { get; set; }
-    public int maxPayload { get; set; }
-    protected char type { get; set; }
-    private static int idStatic;
+    public double CargoMass { get; set; }
+    public int Height { get; set; }
+    public double TareWeight { get; set; }
+    public int Depth { get; set; }
+    public string SerialNumber { get; set; }
+    public int MaxPayload { get; set; }
+    protected char Type { get; set; }
+    private static int _idStatic;
     
 
     public Container(int height, double tareWeight, int depth, int maxPayload)
     {
-        this.height = height;
-        this.tareWeight = tareWeight;
-        this.depth = depth;
-        this.maxPayload = maxPayload;
-        cargoMass = 0;
-        serialNumber = "KON-" + type + "-" + idStatic++;
+        Height = height;
+        TareWeight = tareWeight;
+        Depth = depth;
+        MaxPayload = maxPayload;
+        CargoMass = 0;
+        SerialNumber = "KON-" + Type + "-" + _idStatic++;
     }
 
     public void Empty()
     {
-        cargoMass = 0;
+        CargoMass = 0;
     }
 
-    public void Load(double mass)
+    public virtual void Load(double mass)
     {
-        if (cargoMass + mass > maxPayload) throw new OverflowException("The cargo has exceeded maximum capacity");
-        cargoMass += mass;
+        if (CargoMass + mass > MaxPayload) throw new OverflowException("The cargo has exceeded maximum capacity");
+        CargoMass += mass;
     }
 
     public double GetTotalMass()
     {
-        return tareWeight + cargoMass;
+        return TareWeight + CargoMass;
     }
 
     public override string ToString()
     {
-        return serialNumber;
+        return SerialNumber;
     }
 }
