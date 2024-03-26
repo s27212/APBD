@@ -1,4 +1,4 @@
-﻿namespace Containers;
+﻿namespace Tutorial2;
 
 public enum ProductType
 {

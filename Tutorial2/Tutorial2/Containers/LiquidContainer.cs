@@ -1,15 +1,16 @@
-﻿namespace Containers;
+﻿namespace Tutorial2.Containers;
 
 public class LiquidContainer : Container, IHazardNotifier
 {
-    public bool ContainsHazardous { get; set; }
+    private bool ContainsHazardous { get; }
     public LiquidContainer(int height, double tareWeight, int depth, int maxPayload, bool containsHazardous) 
         : base(height, tareWeight, depth, maxPayload)
     {
         Type = 'L';
+        SerialNumber = "KON-" + Type + "-" + IdStatic++;
         ContainsHazardous = containsHazardous;
     }
-    
+
     public override void Load(double mass)
     {
         var cargoMass = CargoMass + mass;
@@ -18,7 +19,7 @@ public class LiquidContainer : Container, IHazardNotifier
             ((IHazardNotifier)this).Notify();
             return;
         }
+
         base.Load(mass);
     }
-
 }

@@ -1,4 +1,4 @@
-﻿namespace Containers;
+﻿namespace Tutorial2;
 
 public interface IHazardNotifier
 {
@@ -6,4 +6,5 @@ public interface IHazardNotifier
     {
         Console.WriteLine("Hazardous situation has occured!");
     }
+    
 }

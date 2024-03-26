@@ -1,34 +1,26 @@
-﻿namespace Containers;
+﻿using Tutorial2.Containers;
 
-public class Ship
+namespace Tutorial2;
+
+public class Ship(List<Container> containers, int maxSpeedKnots, int maxContainers, double maxWeight, string name)
 {
-    public Ship(List<Container> containers, int maxSpeedKnots, int maxContainers, double maxWeight)
-    {
-        this.containers = containers;
-        MaxSpeedKnots = maxSpeedKnots;
-        MaxContainers = maxContainers;
-        MaxWeight = maxWeight;
-    }
-
-    public List<Container> containers { get; set; }
-    public int MaxSpeedKnots { get; set; }
-    public int MaxContainers { get; set; }
-    public double MaxWeight { get; set; }
+    private List<Container> _containers = containers;
+    public string Name { get; } = name;
+    private int MaxSpeedKnots { get; } = maxSpeedKnots;
+    private int MaxContainers { get; } = maxContainers;
+    private double MaxWeight { get; } = maxWeight;
 
     public void Load(Container container)
     {
-        if (containers.Count + 1 > MaxContainers)
+        if (_containers.Count + 1 > MaxContainers)
         {
-            Console.WriteLine("The ship cannot take any more containers");
+            throw new OverflowException("The ship cannot take any more containers");
         }
-        else if (GetTotalMass() + container.GetTotalMass() > MaxWeight)
+        if (GetTotalMass() + container.GetTotalMass() > MaxWeight)
         {
-            Console.WriteLine("The maximum cargo weight is exceeded");
+            throw new OverflowException("The maximum cargo weight is exceeded");
         }
-        else
-        {
-            containers.Add(container);
-        }
+        _containers.Add(container);
     }
 
     public void Load(List<Container> containerList)
@@ -47,42 +39,50 @@ public class Ship
 
     public void Replace(string toReplace, Container replaceWith)
     {
-        var container = containers.Find(c => c.SerialNumber == toReplace);
+        var container = _containers.Find(c => c.SerialNumber == toReplace);
         if (container == null)
         {
             Console.WriteLine("Container with such serial number does not exist");
         }
         else
         {
-            containers[containers.IndexOf(container)] = replaceWith;
+            _containers[_containers.IndexOf(container)] = replaceWith;
         }
     }
 
-    private void Unload(Container container)
+    public void Unload(Container container)
     {
-        containers.Remove(container);
+        _containers.Remove(container);
     }
 
-    public void UnloadLast()
+    public override string ToString()
     {
-        containers.RemoveAt(containers.Count-1);
+        return $"{Name} (Maximum speed: {MaxSpeedKnots}; Maximum containers number: {MaxContainers}" +
+               $"; Maximum weight: {MaxWeight})";
     }
 
     public void Info()
     {
-        Console.WriteLine("Maximum speed: {0}\nMaximum containers number: {1}\nMaximum weight: {2}",
-            MaxSpeedKnots,MaxContainers,MaxWeight);
+        Console.WriteLine(this);
         Console.WriteLine("Loaded containers:");
-        foreach (var c in containers)
+        foreach (var c in _containers)
         {
             Console.WriteLine(c);
         }
     }
-    
-    
 
     private double GetTotalMass()
     {
-        return containers.Sum(c => c.GetTotalMass());
+        return _containers.Sum(c => c.GetTotalMass());
+    }
+
+    public int GetContainersNumber()
+    {
+        return _containers.Count;
+    }
+
+    public bool HasContainer(Container container)
+    {
+        return _containers.Contains(container);
     }
 }
