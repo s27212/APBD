@@ -62,5 +62,5 @@ public class TripsController : ControllerBase
         await _service.AssignClientToTripAsync(idTrip, dto);
         return Created();
     }
-
+    
 }

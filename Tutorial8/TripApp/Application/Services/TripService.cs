@@ -67,7 +67,6 @@ public class TripService : ITripService
     public async Task AssignClientToTripAsync(int idTrip, RegisterClientDTO clientDto)
     {
         var client = clientDto.MapToClientEntity();
-        
         await _repository.AssignClientToTripAsync(idTrip, client, clientDto.PaymentDate);
     }
 }

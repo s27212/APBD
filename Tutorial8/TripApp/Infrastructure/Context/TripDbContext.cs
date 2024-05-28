@@ -7,13 +7,15 @@ namespace TripApp.Context;
 
 public partial class TripDbContext : DbContext
 {
+    private readonly string _connectionString;
     public TripDbContext()
     {
     }
 
-    public TripDbContext(DbContextOptions<TripDbContext> options)
+    public TripDbContext(DbContextOptions<TripDbContext> options, IConfiguration configuration)
         : base(options)
     {
+        _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
     public virtual DbSet<Client> Clients { get; set; }
@@ -25,8 +27,7 @@ public partial class TripDbContext : DbContext
     public virtual DbSet<Trip> Trips { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data source=localhost\\SQLEXPRESS;Database=APBD;Integrated Security=sspi;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer(_connectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
