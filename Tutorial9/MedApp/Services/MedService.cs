@@ -33,4 +33,9 @@ public class MedService : IMedService
         
         await _repository.AddPrescription(form.MapToPrescription(), form.Medicaments);
     }
+
+    public async Task<Patient?> GetPatientAndPrescriptions(int patientId)
+    {
+        return await _repository.GetPatientAndPRescriptions(patientId);
+    }
 }

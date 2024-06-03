@@ -42,4 +42,16 @@ public class MedController : ControllerBase
 
         return Created();
     }
+
+    [HttpGet("/{id:int}")]
+    public async Task<IActionResult> getPatient(int id)
+    {
+        var patient = await _service.GetPatientAndPrescriptions(id);
+        if (patient == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(patient);
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace MedApp.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace MedApp.Models;
 
 public class Prescription
 {
@@ -7,11 +9,15 @@ public class Prescription
     public DateTime DueDate { get; set; }
 
     public int IdPatient { get; set; }
-    public required Patient Patient { get; set; }
+
+    [JsonIgnore]
+    public Patient Patient { get; set; } = null!;
 
     public int IdDoctor { get; set; }
-    public required Doctor Doctor { get; set; }
 
+    [JsonIgnore] 
+    public Doctor Doctor { get; set; } = null!;
+    
     public ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; } =
         new List<PrescriptionMedicament>();
 }

@@ -40,7 +40,11 @@ public class MedRepository : IMedRepository
 
     public async Task AddPrescription(Prescription prescription, List<MedicamentDTO> medicaments)
     {
+        var doctor = await _dbContext.Doctors.FindAsync(prescription.Doctor.IdDoctor);
+        prescription.Doctor = doctor!;
         var newPrescription = await _dbContext.Prescriptions.AddAsync(prescription);
+        await _dbContext.SaveChangesAsync();
+        
         await _dbContext.AddRangeAsync(medicaments
             .Select(m => new PrescriptionMedicament
             {
@@ -51,5 +55,13 @@ public class MedRepository : IMedRepository
             }));
         await _dbContext.SaveChangesAsync();
     }
-    
+
+    public async Task<Patient?> GetPatientAndPRescriptions(int patientId)
+    {
+        return await _dbContext.Patients
+            .Where(e => e.IdPatient == patientId)
+            .Include(e => e.Prescriptions.OrderBy(p => p.DueDate))
+            .ThenInclude(e => e.PrescriptionMedicaments)
+            .FirstOrDefaultAsync();
+    }
 }

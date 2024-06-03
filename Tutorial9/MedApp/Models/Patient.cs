@@ -8,6 +8,5 @@ public class Patient
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public DateTime Birthdate { get; set; }
-    
     public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 }

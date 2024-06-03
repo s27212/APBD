@@ -10,4 +10,5 @@ public interface IMedRepository
     Task<bool> PatientExists(Patient patient);
     Task AddPatient(Patient patient);
     Task AddPrescription(Prescription prescription, List<MedicamentDTO> medicaments);
+    Task<Patient?> GetPatientAndPRescriptions(int patientId);
 }

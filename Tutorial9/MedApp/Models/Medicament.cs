@@ -1,4 +1,6 @@
-﻿namespace MedApp.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace MedApp.Models;
 
 public class Medicament
 {
@@ -7,6 +9,7 @@ public class Medicament
     public required string Description { get; set; }
     public required string Type { get; set; }
 
+    [JsonIgnore]
     public ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; } =
         new List<PrescriptionMedicament>();
 }
