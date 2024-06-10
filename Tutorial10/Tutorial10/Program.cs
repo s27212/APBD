@@ -26,6 +26,18 @@ builder.Services.AddAuthentication(o =>
         ValidAudience = builder.Configuration["Auth:ValidAudience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:SecretKey"]!))
     };
+}).AddJwtBearer("IgnoreTokenExpirationScheme",opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ClockSkew = TimeSpan.FromMinutes(2),
+        ValidIssuer = builder.Configuration["Auth:ValidIssuer"],
+        ValidAudience = builder.Configuration["Auth:ValidAudience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:SecretKey"]!))
+    };
 });
 
 

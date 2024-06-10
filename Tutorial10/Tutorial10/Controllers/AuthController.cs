@@ -39,6 +39,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("refresh")]
+    [Authorize(AuthenticationSchemes = "IgnoreTokenExpirationScheme")]
     public IActionResult RefreshToken(string refreshToken)
     {
         var (accessToken, newRefreshToken) =  _service.RefreshToken(refreshToken);

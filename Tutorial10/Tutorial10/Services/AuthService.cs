@@ -72,7 +72,7 @@ public class AuthService : IAuthService
         }
 
         var (accessToken, newRefreshToken) = GenerateTokensForUser(user);
-        user.RefreshToken = refreshToken;
+        user.RefreshToken = newRefreshToken;
         user.RefreshTokenExp = DateTime.UtcNow.AddDays(30);
         _dbContext.SaveChanges();
 
