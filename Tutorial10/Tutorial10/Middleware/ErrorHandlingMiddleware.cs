@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Tutorial10.Exceptions;
 
 namespace Tutorial10.Properties.Middleware;
 
@@ -21,22 +22,29 @@ public class ErrorHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unhandled exception occurred");
-            
             await HandleExceptionAsync(context, ex);
         }
     }
     
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        if (exception is InvalidRequestDataException)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        }
+        else
+        {
+            _logger.LogError("Unexpected error has occurred.");
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        }
+        
         context.Response.ContentType = "application/json";
         
         var response = new
         {
             error = new
             {
-                message = "An error occurred while processing your request.",
+                message = "An error occurred while processing request.",
                 detail = exception.Message
             }
         };

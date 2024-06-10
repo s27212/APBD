@@ -6,4 +6,5 @@ public interface IAuthService
 {
     public void RegisterUser(RegisterUserRequest model);
     (string accessToken, string refreshToken) LoginUser(LoginUserRequest model);
+    (string accessToken, string refreshToken) RefreshToken(string refreshToken);
 }

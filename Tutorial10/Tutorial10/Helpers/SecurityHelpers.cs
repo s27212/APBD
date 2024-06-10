@@ -46,7 +46,6 @@ public class SecurityHelpers
             iterationCount: 10000,
             numBytesRequested: 256 / 8));
     }
-
     public string GenerateRefreshToken()
     {
         var randomNumber = new byte[32];

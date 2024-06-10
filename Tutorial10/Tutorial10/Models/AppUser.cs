@@ -14,7 +14,7 @@ public class AppUser
     
     public string Salt { get; set; }
     
-    public string RefreshToken { get; set; }
+    public string? RefreshToken { get; set; }
     
     public DateTime? RefreshTokenExp { get; set; }
 }
