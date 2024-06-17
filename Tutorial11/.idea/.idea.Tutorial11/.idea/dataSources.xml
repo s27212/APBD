@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="MvcMovieContext-bfbf224f-c40c-417d-a6f1-e5165d662bb4" uuid="de7b899d-9c01-46d3-977b-4cc52a0fbab5">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\Studies\4 sem\APBD\Tutorial2+\Tutorial11\Tutorial11\MvcMovieContext-bfbf224f-c40c-417d-a6f1-e5165d662bb4.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
